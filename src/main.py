@@ -47,7 +47,7 @@ class CalculatorGUI:
         # Button layout
         buttons = [
             ['7', '8', '9', '/'],
-            ['4', '5', '6', '*'],
+            ['4', '5', '6', '*', '^'],  # added '^' power button
             ['1', '2', '3', '-'],
             ['C', '0', '=', '+']
         ]
@@ -64,15 +64,17 @@ class CalculatorGUI:
                 button.grid(row=row_idx, column=col_idx, sticky="nsew", padx=2, pady=2)
 
         # Configure grid weights for responsive layout
-        for i in range(4):
+        max_cols = max(len(r) for r in buttons)
+        for i in range(len(buttons)):
             buttons_frame.rowconfigure(i, weight=1)
-            buttons_frame.columnconfigure(i, weight=1)
+        for j in range(max_cols):
+            buttons_frame.columnconfigure(j, weight=1)
 
     def _on_button_click(self, char):
         """Handle button click events."""
         if char.isdigit():
             self._handle_digit(char)
-        elif char in ['+', '-', '*', '/']:
+        elif char in ['+', '-', '*', '/', '^']:
             self._handle_operation(char)
         elif char == '=':
             self._handle_equals()
@@ -121,6 +123,8 @@ class CalculatorGUI:
             return self.calculator.multiply(a, b)
         elif operation == '/':
             return self.calculator.divide(a, b)
+        elif operation == '^':
+            return self.calculator.power(a, b)
 
     def _handle_clear(self):
         """Handle clear button press."""

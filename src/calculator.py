@@ -19,6 +19,10 @@ class Calculator:
         """Multiply two numbers and return the result."""
         return a * b
 
+    def power(self, a, b):
+        """Raise a to the power of b and return the result."""
+        return a ** b
+
     def divide(self, a, b):
         """Divide a by b and return the result."""
         if b == 0:
